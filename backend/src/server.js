@@ -3,6 +3,8 @@ const cors = require('cors');
 require('dotenv').config();
 
 const { connectDB } = require('./config/database');
+const authRoutes = require('./routes/auth');
+const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
@@ -10,6 +12,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Routes
+app.use('/api/auth', authRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {
@@ -28,6 +33,9 @@ app.get('/', (req, res) => {
     version: '1.0.0'
   });
 });
+
+// Error handling middleware
+app.use(errorHandler);
 
 
 if (process.env.NODE_ENV !== 'test') {
