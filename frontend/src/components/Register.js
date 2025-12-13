@@ -38,12 +38,16 @@ function Register() {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card">
-            <div className="card-body">
-              <h2 className="card-title text-center mb-4">Register</h2>
+    <div className="auth-container">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-md-6 col-lg-5">
+            <div className="auth-card card">
+              <div className="auth-header">
+                <h2>🍰 Join Us!</h2>
+                <p className="mb-0">Create your account</p>
+              </div>
+              <div className="auth-body">
               {error && (
                 <div className="alert alert-danger" role="alert">
                   {error}
@@ -106,6 +110,7 @@ function Register() {
                     Login
                   </a>
                 </p>
+              </div>
               </div>
             </div>
           </div>

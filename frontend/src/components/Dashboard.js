@@ -100,7 +100,7 @@ function Dashboard() {
   if (loading) {
     return (
       <div className="container mt-4">
-        <div className="text-center">
+        <div className="spinner-container">
           <div className="spinner-border" role="status">
             <span className="visually-hidden">Loading...</span>
           </div>
@@ -123,20 +123,22 @@ function Dashboard() {
     <div className="container mt-4">
       <div className="row">
         <div className="col-12">
-          <div className="d-flex justify-content-between align-items-center mb-4">
-            <h1>Sweet Shop</h1>
-            {isAdmin && (
-              <button
-                className="btn btn-primary btn-lg"
-                onClick={() => {
-                  setEditingSweet(null);
-                  setShowForm(true);
-                }}
-                style={{ minWidth: '150px' }}
-              >
-                + Add New Sweet
-              </button>
-            )}
+          <div className="dashboard-header">
+            <div className="d-flex justify-content-between align-items-center flex-wrap">
+              <h1 className="dashboard-title">🍬 Sweet Shop</h1>
+              {isAdmin && (
+                <button
+                  className="btn btn-primary btn-lg"
+                  onClick={() => {
+                    setEditingSweet(null);
+                    setShowForm(true);
+                  }}
+                  style={{ minWidth: '180px', fontWeight: 'bold' }}
+                >
+                  ➕ Add New Sweet
+                </button>
+              )}
+            </div>
           </div>
 
           {showForm && (
@@ -159,11 +161,15 @@ function Dashboard() {
             </div>
           )}
 
-          <SearchBar onSearch={handleSearch} />
+          <div className="search-container">
+            <SearchBar onSearch={handleSearch} />
+          </div>
 
           {filteredSweets.length === 0 && !loading && (
-            <div className="alert alert-info" role="alert">
-              No sweets available
+            <div className="empty-state">
+              <div className="empty-state-icon">🍭</div>
+              <h3>No sweets available</h3>
+              <p className="text-muted">Check back later or add some sweets if you're an admin!</p>
             </div>
           )}
 
