@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
-import { isAuthenticated } from '../utils/auth';
+import { isAuthenticated, getUserRole } from '../utils/auth';
 import { useNavigate } from 'react-router-dom';
 import SweetCard from './SweetCard';
+import SearchBar from './SearchBar';
+import SweetForm from './SweetForm';
 
 function Dashboard() {
   const [sweets, setSweets] = useState([]);
+  const [filteredSweets, setFilteredSweets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [editingSweet, setEditingSweet] = useState(null);
   const navigate = useNavigate();
+  const isAdmin = getUserRole() === 'admin';
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -25,12 +31,70 @@ function Dashboard() {
       setError(null);
       const response = await api.get('/sweets');
       setSweets(response.data);
+      setFilteredSweets(response.data);
     } catch (err) {
       setError('Failed to load sweets. Please try again.');
       console.error('Error fetching sweets:', err);
     } finally {
       setLoading(false);
     }
+  }
+
+  async function handleSearch(filters) {
+    try {
+      const params = new URLSearchParams();
+      if (filters.name) params.append('name', filters.name);
+      if (filters.category) params.append('category', filters.category);
+      if (filters.minPrice) params.append('minPrice', filters.minPrice);
+      if (filters.maxPrice) params.append('maxPrice', filters.maxPrice);
+
+      const queryString = params.toString();
+      const url = queryString ? `/sweets/search?${queryString}` : '/sweets';
+      const response = await api.get(url);
+      setFilteredSweets(response.data);
+    } catch (err) {
+      console.error('Error searching sweets:', err);
+    }
+  }
+
+  async function handlePurchase(sweetId) {
+    try {
+      await api.post(`/sweets/${sweetId}/purchase`, { quantity: 1 });
+      await fetchSweets();
+      alert('Purchase successful!');
+    } catch (err) {
+      alert(err.response?.data?.error || 'Purchase failed. Please try again.');
+    }
+  }
+
+  async function handleDelete(sweetId) {
+    if (!window.confirm('Are you sure you want to delete this sweet?')) {
+      return;
+    }
+
+    try {
+      await api.delete(`/sweets/${sweetId}`);
+      await fetchSweets();
+      alert('Sweet deleted successfully!');
+    } catch (err) {
+      alert(err.response?.data?.error || 'Delete failed. Please try again.');
+    }
+  }
+
+  function handleEdit(sweet) {
+    setEditingSweet(sweet);
+    setShowForm(true);
+  }
+
+  function handleFormSuccess() {
+    setShowForm(false);
+    setEditingSweet(null);
+    fetchSweets();
+  }
+
+  function handleFormCancel() {
+    setShowForm(false);
+    setEditingSweet(null);
   }
 
   if (loading) {
@@ -55,25 +119,64 @@ function Dashboard() {
     );
   }
 
-  if (sweets.length === 0) {
-    return (
-      <div className="container mt-4">
-        <div className="alert alert-info" role="alert">
-          No sweets available
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="container mt-4">
       <div className="row">
         <div className="col-12">
-          <h1 className="mb-4">Sweet Shop</h1>
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <h1>Sweet Shop</h1>
+            {isAdmin && (
+              <button
+                className="btn btn-primary btn-lg"
+                onClick={() => {
+                  setEditingSweet(null);
+                  setShowForm(true);
+                }}
+                style={{ minWidth: '150px' }}
+              >
+                + Add New Sweet
+              </button>
+            )}
+          </div>
+
+          {showForm && (
+            <div className="mb-4">
+              <div className="card border-primary">
+                <div className="card-header bg-primary text-white">
+                  <h5 className="mb-0">
+                    {editingSweet ? 'Edit Sweet' : 'Add New Sweet'}
+                  </h5>
+                </div>
+                <div className="card-body">
+                  <SweetForm
+                    sweet={editingSweet}
+                    onSuccess={handleFormSuccess}
+                    onCancel={handleFormCancel}
+                    isAdmin={isAdmin}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          <SearchBar onSearch={handleSearch} />
+
+          {filteredSweets.length === 0 && !loading && (
+            <div className="alert alert-info" role="alert">
+              No sweets available
+            </div>
+          )}
+
           <div className="row g-4">
-            {sweets.map((sweet) => (
+            {filteredSweets.map((sweet) => (
               <div key={sweet._id} className="col-md-4 col-sm-6">
-                <SweetCard sweet={sweet} />
+                <SweetCard
+                  sweet={sweet}
+                  onPurchase={handlePurchase}
+                  isAdmin={isAdmin}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
               </div>
             ))}
           </div>
