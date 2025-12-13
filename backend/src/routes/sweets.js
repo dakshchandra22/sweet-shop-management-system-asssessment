@@ -1,7 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const { authenticate, isAdmin } = require('../middleware/auth');
-const { createSweet, getAllSweets } = require('../controllers/sweetController');
+const {
+  createSweet,
+  getAllSweets,
+  searchSweets,
+  updateSweet,
+  deleteSweet,
+  purchaseSweet,
+  restockSweet
+} = require('../controllers/sweetController');
 
 // Create sweet (authenticated users)
 router.post('/', authenticate, createSweet);
@@ -9,13 +17,19 @@ router.post('/', authenticate, createSweet);
 // Get all sweets (authenticated users)
 router.get('/', authenticate, getAllSweets);
 
-// Admin only route - DELETE sweet
-router.delete('/:id', authenticate, isAdmin, (req, res) => {
-  res.json({
-    message: 'Admin route accessed',
-    user: req.user,
-    sweetId: req.params.id
-  });
-});
+// Search sweets (authenticated users)
+router.get('/search', authenticate, searchSweets);
+
+// Update sweet (authenticated users)
+router.put('/:id', authenticate, updateSweet);
+
+// Delete sweet (admin only)
+router.delete('/:id', authenticate, isAdmin, deleteSweet);
+
+// Purchase sweet (authenticated users)
+router.post('/:id/purchase', authenticate, purchaseSweet);
+
+// Restock sweet (admin only)
+router.post('/:id/restock', authenticate, isAdmin, restockSweet);
 
 module.exports = router;

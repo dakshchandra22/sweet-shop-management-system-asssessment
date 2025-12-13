@@ -35,6 +35,14 @@ function errorHandler(err, req, res, next) {
     statusCode = 401;
   }
 
+  if (err.message === 'Sweet not found') {
+    statusCode = 404;
+  }
+
+  if (err.message.includes('out of stock') || err.message.includes('Insufficient quantity')) {
+    statusCode = 400;
+  }
+
   res.status(statusCode).json({
     success: false,
     error: message,
