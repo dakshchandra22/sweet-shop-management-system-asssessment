@@ -4,6 +4,7 @@ const Sweet = require('../src/models/Sweet');
 describe('Sweet Model', () => {
   beforeAll(async () => {
     await connectDB();
+    await clearDatabase();
   });
 
   afterEach(async () => {
@@ -11,6 +12,7 @@ describe('Sweet Model', () => {
   });
 
   afterAll(async () => {
+    await clearDatabase();
     await disconnectDB();
   });
 

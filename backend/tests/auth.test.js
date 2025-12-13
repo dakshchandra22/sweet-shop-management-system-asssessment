@@ -6,6 +6,7 @@ const User = require('../src/models/User');
 describe('POST /api/auth/register', () => {
   beforeAll(async () => {
     await connectDB();
+    await clearDatabase();
   });
 
   afterEach(async () => {
@@ -13,6 +14,7 @@ describe('POST /api/auth/register', () => {
   });
 
   afterAll(async () => {
+    await clearDatabase();
     await disconnectDB();
   });
 

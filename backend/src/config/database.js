@@ -36,6 +36,10 @@ async function clearDatabase() {
     throw new Error('clearDatabase can only be used in test environment');
   }
   
+  if (!mongoose.connection.readyState) {
+    return; // Not connected, nothing to clear
+  }
+  
   const collections = mongoose.connection.collections;
   for (const key in collections) {
     try {
@@ -46,10 +50,25 @@ async function clearDatabase() {
   }
 }
 
+async function dropDatabase() {
+  if (process.env.NODE_ENV !== 'test') {
+    throw new Error('dropDatabase can only be used in test environment');
+  }
+  
+  if (mongoose.connection.readyState) {
+    try {
+      await mongoose.connection.db.dropDatabase();
+    } catch (error) {
+      console.error('Error dropping database:', error.message);
+    }
+  }
+}
+
 module.exports = {
   connectDB,
   disconnectDB,
   clearDatabase,
+  dropDatabase,
   getDatabaseURI
 };
 

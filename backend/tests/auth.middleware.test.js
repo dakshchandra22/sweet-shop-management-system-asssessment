@@ -9,6 +9,7 @@ describe('Authentication Middleware', () => {
 
   beforeAll(async () => {
     await connectDB();
+    await clearDatabase();
   });
 
   beforeEach(async () => {
@@ -30,6 +31,7 @@ describe('Authentication Middleware', () => {
   });
 
   afterAll(async () => {
+    await clearDatabase();
     await disconnectDB();
   });
 

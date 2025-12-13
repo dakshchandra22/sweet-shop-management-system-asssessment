@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 describe('Database Configuration', () => {
   beforeAll(async () => {
     await connectDB();
+    await clearDatabase();
   });
 
   afterEach(async () => {
@@ -11,6 +12,7 @@ describe('Database Configuration', () => {
   });
 
   afterAll(async () => {
+    await clearDatabase();
     await disconnectDB();
   });
 

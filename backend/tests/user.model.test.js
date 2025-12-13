@@ -4,6 +4,7 @@ const User = require('../src/models/User');
 describe('User Model', () => {
   beforeAll(async () => {
     await connectDB();
+    await clearDatabase();
   });
 
   afterEach(async () => {
@@ -11,6 +12,7 @@ describe('User Model', () => {
   });
 
   afterAll(async () => {
+    await clearDatabase();
     await disconnectDB();
   });
 
