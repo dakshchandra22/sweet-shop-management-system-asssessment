@@ -12,10 +12,7 @@ async function connectDB() {
   const dbName = process.env.NODE_ENV === 'test' ? 'sweetshop-test' : 'sweetshop';
   
   try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(uri);
     
     console.log(`✅ Connected to MongoDB: ${dbName}`);
     console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
