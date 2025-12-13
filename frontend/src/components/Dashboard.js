@@ -34,24 +34,50 @@ function Dashboard() {
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="container mt-4">
+        <div className="text-center">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return (
+      <div className="container mt-4">
+        <div className="alert alert-danger" role="alert">
+          {error}
+        </div>
+      </div>
+    );
   }
 
   if (sweets.length === 0) {
-    return <div>No sweets available</div>;
+    return (
+      <div className="container mt-4">
+        <div className="alert alert-info" role="alert">
+          No sweets available
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="dashboard">
-      <h1>Sweet Shop</h1>
-      <div className="sweets-grid">
-        {sweets.map((sweet) => (
-          <SweetCard key={sweet._id} sweet={sweet} />
-        ))}
+    <div className="container mt-4">
+      <div className="row">
+        <div className="col-12">
+          <h1 className="mb-4">Sweet Shop</h1>
+          <div className="row g-4">
+            {sweets.map((sweet) => (
+              <div key={sweet._id} className="col-md-4 col-sm-6">
+                <SweetCard sweet={sweet} />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

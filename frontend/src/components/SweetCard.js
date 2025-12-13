@@ -8,26 +8,45 @@ function SweetCard({ sweet, onPurchase, isAdmin = false, onEdit, onDelete }) {
   };
 
   return (
-    <div className="sweet-card" data-testid={`sweet-card-${sweet._id}`}>
-      <h3>{sweet.name}</h3>
-      <p>Category: {sweet.category}</p>
-      <p>Price: ₹{sweet.price}</p>
-      <p>Quantity: {sweet.quantity}</p>
-      
-      <button
-        onClick={handlePurchase}
-        disabled={sweet.quantity === 0}
-        aria-label="Purchase"
-      >
-        Purchase
-      </button>
+    <div className="card h-100" data-testid={`sweet-card-${sweet._id}`}>
+      <div className="card-body">
+        <h5 className="card-title">{sweet.name}</h5>
+        <p className="card-text">
+          <strong>Category:</strong> {sweet.category}
+        </p>
+        <p className="card-text">
+          <strong>Price:</strong> ₹{sweet.price}
+        </p>
+        <p className="card-text">
+          <strong>Quantity:</strong> {sweet.quantity}
+        </p>
+        
+        <button
+          className="btn btn-primary w-100 mb-2"
+          onClick={handlePurchase}
+          disabled={sweet.quantity === 0}
+          aria-label="Purchase"
+        >
+          Purchase
+        </button>
 
-      {isAdmin && (
-        <div className="admin-actions">
-          <button onClick={() => onEdit && onEdit(sweet)}>Edit</button>
-          <button onClick={() => onDelete && onDelete(sweet._id)}>Delete</button>
-        </div>
-      )}
+        {isAdmin && (
+          <div className="d-flex gap-2">
+            <button 
+              className="btn btn-warning flex-fill"
+              onClick={() => onEdit && onEdit(sweet)}
+            >
+              Edit
+            </button>
+            <button 
+              className="btn btn-danger flex-fill"
+              onClick={() => onDelete && onDelete(sweet._id)}
+            >
+              Delete
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

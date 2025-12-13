@@ -77,75 +77,88 @@ function SweetForm({ sweet, onSuccess, onCancel, isAdmin = false }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="sweet-form">
-      <div>
-        <label htmlFor="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-        {errors.name && <span className="error">{errors.name}</span>}
-      </div>
+    <div className="card">
+      <div className="card-body">
+        <h5 className="card-title mb-4">{sweet ? 'Edit Sweet' : 'Add New Sweet'}</h5>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">Name:</label>
+            <input
+              type="text"
+              className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+            {errors.name && <div className="invalid-feedback">{errors.name}</div>}
+          </div>
 
-      <div>
-        <label htmlFor="category">Category:</label>
-        <select
-          id="category"
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select Category</option>
-          <option value="Indian">Indian</option>
-          <option value="Western">Western</option>
-        </select>
-        {errors.category && <span className="error">{errors.category}</span>}
-      </div>
+          <div className="mb-3">
+            <label htmlFor="category" className="form-label">Category:</label>
+            <select
+              className={`form-select ${errors.category ? 'is-invalid' : ''}`}
+              id="category"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Category</option>
+              <option value="Indian">Indian</option>
+              <option value="Western">Western</option>
+            </select>
+            {errors.category && <div className="invalid-feedback">{errors.category}</div>}
+          </div>
 
-      <div>
-        <label htmlFor="price">Price:</label>
-        <input
-          type="number"
-          id="price"
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
-          min="0"
-          required
-        />
-        {errors.price && <span className="error">{errors.price}</span>}
-      </div>
+          <div className="mb-3">
+            <label htmlFor="price" className="form-label">Price:</label>
+            <input
+              type="number"
+              className={`form-control ${errors.price ? 'is-invalid' : ''}`}
+              id="price"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              min="0"
+              required
+            />
+            {errors.price && <div className="invalid-feedback">{errors.price}</div>}
+          </div>
 
-      <div>
-        <label htmlFor="quantity">Quantity:</label>
-        <input
-          type="number"
-          id="quantity"
-          name="quantity"
-          value={formData.quantity}
-          onChange={handleChange}
-          min="0"
-          required
-        />
-        {errors.quantity && <span className="error">{errors.quantity}</span>}
-      </div>
+          <div className="mb-3">
+            <label htmlFor="quantity" className="form-label">Quantity:</label>
+            <input
+              type="number"
+              className={`form-control ${errors.quantity ? 'is-invalid' : ''}`}
+              id="quantity"
+              name="quantity"
+              value={formData.quantity}
+              onChange={handleChange}
+              min="0"
+              required
+            />
+            {errors.quantity && <div className="invalid-feedback">{errors.quantity}</div>}
+          </div>
 
-      {errors.submit && <div className="error">{errors.submit}</div>}
+          {errors.submit && (
+            <div className="alert alert-danger" role="alert">
+              {errors.submit}
+            </div>
+          )}
 
-      <div className="form-actions">
-        <button type="submit" disabled={submitting}>
-          {sweet ? 'Update' : 'Create'}
-        </button>
-        <button type="button" onClick={onCancel}>
-          Cancel
-        </button>
+          <div className="d-flex gap-2">
+            <button type="submit" className="btn btn-primary" disabled={submitting}>
+              {submitting ? 'Saving...' : sweet ? 'Update' : 'Create'}
+            </button>
+            <button type="button" className="btn btn-secondary" onClick={onCancel}>
+              Cancel
+            </button>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   );
 }
 
