@@ -4,6 +4,7 @@ require('dotenv').config();
 
 const { connectDB } = require('./config/database');
 const authRoutes = require('./routes/auth');
+const sweetRoutes = require('./routes/sweets');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/sweets', sweetRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {
@@ -37,7 +39,7 @@ app.get('/', (req, res) => {
 // Error handling middleware
 app.use(errorHandler);
 
-
+// Database connection (only in non-test environments)
 if (process.env.NODE_ENV !== 'test') {
   connectDB().catch(err => {
     console.error('Failed to connect to database:', err);
@@ -56,4 +58,3 @@ if (require.main === module && process.env.NODE_ENV !== 'test') {
 }
 
 module.exports = app;
-
