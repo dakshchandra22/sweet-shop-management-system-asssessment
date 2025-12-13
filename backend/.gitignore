@@ -4,12 +4,9 @@ package-lock.json
 
 # Environment variables
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env
 # Note: .env.test should be committed for team consistency, but can be ignored if needed
-# .env.test
+.env.test
 
 # Testing
 coverage/
@@ -36,4 +33,6 @@ Thumbs.db
 # Build
 dist/
 build/
+
+.gitignore
 

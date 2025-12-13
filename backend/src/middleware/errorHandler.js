@@ -31,6 +31,10 @@ function errorHandler(err, req, res, next) {
     statusCode = 400;
   }
 
+  if (err.message === 'Invalid credentials') {
+    statusCode = 401;
+  }
+
   res.status(statusCode).json({
     success: false,
     error: message,
@@ -39,4 +43,3 @@ function errorHandler(err, req, res, next) {
 }
 
 module.exports = errorHandler;
-

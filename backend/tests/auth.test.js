@@ -214,3 +214,139 @@ describe('POST /api/auth/register', () => {
   });
 });
 
+describe('POST /api/auth/login', () => {
+  beforeAll(async () => {
+    await connectDB();
+  });
+
+  afterEach(async () => {
+    await clearDatabase();
+  });
+
+  afterAll(async () => {
+    await disconnectDB();
+  });
+
+  describe('Successful Login', () => {
+    test('should login user with valid credentials', async () => {
+      // First register a user
+      const userData = {
+        username: 'testuser',
+        email: 'test@example.com',
+        password: 'password123'
+      };
+
+      await request(app)
+        .post('/api/auth/register')
+        .send(userData);
+
+      // Now login
+      const response = await request(app)
+        .post('/api/auth/login')
+        .send({
+          email: 'test@example.com',
+          password: 'password123'
+        });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('token');
+      expect(response.body).toHaveProperty('user');
+      expect(response.body.user.email).toBe('test@example.com');
+      expect(response.body.user).not.toHaveProperty('password');
+    });
+
+    test('should return JWT token on successful login', async () => {
+      const userData = {
+        username: 'testuser',
+        email: 'test@example.com',
+        password: 'password123'
+      };
+
+      await request(app)
+        .post('/api/auth/register')
+        .send(userData);
+
+      const response = await request(app)
+        .post('/api/auth/login')
+        .send({
+          email: 'test@example.com',
+          password: 'password123'
+        });
+
+      expect(response.body.token).toBeDefined();
+      expect(typeof response.body.token).toBe('string');
+      expect(response.body.token.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('Invalid Credentials', () => {
+    test('should not login with invalid email', async () => {
+      const userData = {
+        username: 'testuser',
+        email: 'test@example.com',
+        password: 'password123'
+      };
+
+      await request(app)
+        .post('/api/auth/register')
+        .send(userData);
+
+      const response = await request(app)
+        .post('/api/auth/login')
+        .send({
+          email: 'wrong@example.com',
+          password: 'password123'
+        });
+
+      expect(response.status).toBe(401);
+      expect(response.body).toHaveProperty('error');
+    });
+
+    test('should not login with invalid password', async () => {
+      const userData = {
+        username: 'testuser',
+        email: 'test@example.com',
+        password: 'password123'
+      };
+
+      await request(app)
+        .post('/api/auth/register')
+        .send(userData);
+
+      const response = await request(app)
+        .post('/api/auth/login')
+        .send({
+          email: 'test@example.com',
+          password: 'wrongpassword'
+        });
+
+      expect(response.status).toBe(401);
+      expect(response.body).toHaveProperty('error');
+    });
+  });
+
+  describe('Validation Errors', () => {
+    test('should not login without email', async () => {
+      const response = await request(app)
+        .post('/api/auth/login')
+        .send({
+          password: 'password123'
+        });
+
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty('error');
+    });
+
+    test('should not login without password', async () => {
+      const response = await request(app)
+        .post('/api/auth/login')
+        .send({
+          email: 'test@example.com'
+        });
+
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty('error');
+    });
+  });
+});
+

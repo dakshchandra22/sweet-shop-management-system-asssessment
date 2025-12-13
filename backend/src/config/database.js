@@ -38,7 +38,11 @@ async function clearDatabase() {
   
   const collections = mongoose.connection.collections;
   for (const key in collections) {
-    await collections[key].deleteMany({});
+    try {
+      await collections[key].deleteMany({});
+    } catch (error) {
+      // Ignore errors if collection doesn't exist
+    }
   }
 }
 
