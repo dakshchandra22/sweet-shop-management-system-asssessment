@@ -12,7 +12,12 @@ const app = express();
 
 // CORS configuration
 // Allow adding a custom client origin via CLIENT_ORIGIN env var (comma-separated or single)
-const defaultOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:5173'];
+const defaultOrigins = [
+  'http://localhost:3000', 
+  'http://localhost:3001', 
+  'http://localhost:5173',
+  'https://sweet-shop-management-system-assses-flame.vercel.app'
+];
 let allowedOrigins = [...defaultOrigins];
 if (process.env.CLIENT_ORIGIN) {
   const extra = process.env.CLIENT_ORIGIN.split(',').map(s => s.trim()).filter(Boolean);
@@ -71,12 +76,13 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 const PORT = process.env.PORT || 5000;
+const HOST = process.env.HOST || '0.0.0.0';
 
 if (require.main === module && process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
+  app.listen(PORT, HOST, () => {
+    console.log(`🚀 Server running on ${HOST}:${PORT}`);
     console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
-    console.log(`📍 Health check: http://localhost:${PORT}/api/health`);
+    console.log(`📍 Health check: http://${HOST}:${PORT}/api/health`);
   });
 }
 

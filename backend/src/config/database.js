@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 function getDatabaseURI() {
   if (process.env.NODE_ENV === 'test') {
-    return process.env.MONGODB_URI || 'mongodb+srv://daksh22:daksh22@cluster0.bhd2pa4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/sweetshop-test';
+    return process.env.MONGODB_URI ;
   }
-  return process.env.MONGODB_URI || 'mongodb+srv://daksh22:daksh22@cluster0.bhd2pa4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/sweetshop';
+  return process.env.MONGODB_URI ;
 }
 
 async function connectDB() {

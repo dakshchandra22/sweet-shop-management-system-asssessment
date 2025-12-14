@@ -6,21 +6,44 @@ A full-stack web application for managing a sweet shop, built with the MERN stac
 ![MERN](https://img.shields.io/badge/MERN-Stack-green?style=for-the-badge)
 ![TDD](https://img.shields.io/badge/TDD-Approach-blue?style=for-the-badge)
 
+## 🌐 Live Application
+
+**🎉 Try it now!** The application is live and ready to use:
+
+### 🔗 [Live Demo - Frontend](https://sweet-shop-management-system-assses-flame.vercel.app/)
+
+**Backend API:** [https://sweet-shop-r149.onrender.com](https://sweet-shop-r149.onrender.com)
+
+### 🚀 Quick Start
+1. Visit the [live application](https://sweet-shop-management-system-assses-flame.vercel.app/)
+2. Register a new account or use admin credentials:
+   - **Email:** `admin@sweetshop.com`
+   - **Password:** `admin123`
+3. Explore the features and enjoy! 🍭
+
+### 📊 Application Status
+- ✅ Frontend: Live on Vercel
+- ✅ Backend: Live on Render
+- ✅ Database: MongoDB Atlas (Cloud)
+- ✅ Authentication: JWT-based security
+- ✅ Testing: Comprehensive test coverage
+
 ## 📋 Table of Contents
 
+- [Live Application](#-live-application)
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
-- [Prerequisites](#-prerequisites)
+- [Quick Start](#-quick-start)
 - [Installation](#-installation)
 - [Configuration](#-configuration)
 - [Running the Application](#-running-the-application)
 - [Testing](#-testing)
 - [API Documentation](#-api-documentation)
 - [Project Structure](#-project-structure)
-- [Screenshots](#-screenshots)
+- [Deployment](#-deployment)
 - [My Assistant Usage](#-my-assistant-usage)
 - [Contributing](#-contributing)
-- [License](#-license)
+- [Author](#-author)
 
 ## ✨ Features
 
@@ -362,16 +385,17 @@ sweet-shop-management-system-asssessment/
 
 ## 📸 Screenshots
 
-### Dashboard View
-![Dashboard](https://via.placeholder.com/800x400/667eea/ffffff?text=Dashboard+View)
+Visit the [live application](https://sweet-shop-management-system-assses-flame.vercel.app/) to see it in action!
 
-### Login Page
-![Login](https://via.placeholder.com/800x400/764ba2/ffffff?text=Login+Page)
+### Key Features Showcase
 
-### Add Sweet Form
-![Add Sweet](https://via.placeholder.com/800x400/f093fb/ffffff?text=Add+Sweet+Form)
+- **🎨 Modern UI:** Beautiful gradient designs with smooth animations
+- **📱 Responsive Design:** Works perfectly on all devices
+- **🔐 Secure Authentication:** JWT-based login and registration
+- **🍭 Sweet Management:** Easy browsing, searching, and purchasing
+- **👑 Admin Panel:** Full CRUD operations for inventory management
 
-*Note: Replace placeholder images with actual screenshots of your application*
+*Screenshots coming soon!*
 
 ## 🤖 My Assistant Usage
 
@@ -447,29 +471,56 @@ Run `npm run test:coverage` in the backend directory to see detailed coverage re
 
 ## 🚀 Deployment
 
-### Backend Deployment
+### Live Deployment
 
-1. Set environment variables on your hosting platform
-2. Ensure MongoDB is accessible (MongoDB Atlas recommended)
-3. Deploy to platforms like:
-   - Heroku
-   - Railway
-   - Render
-   - AWS EC2
+The application is currently deployed and running:
 
-### Frontend Deployment
+- **Frontend:** [Vercel](https://sweet-shop-management-system-assses-flame.vercel.app/) - Modern, fast, and globally distributed
+- **Backend:** [Render](https://sweet-shop-r149.onrender.com) - Reliable cloud hosting with automatic deployments
 
-1. Build the production bundle:
-   ```bash
-   cd frontend
-   npm run build
-   ```
+### Deployment Details
 
-2. Deploy the `dist` folder to:
-   - Vercel
-   - Netlify
-   - GitHub Pages
-   - AWS S3 + CloudFront
+#### Backend (Render)
+- **URL:** https://sweet-shop-r149.onrender.com
+- **Database:** MongoDB Atlas (cloud database)
+- **Environment Variables:**
+  - `MONGODB_URI` - MongoDB Atlas connection string
+  - `JWT_SECRET` - Secret key for JWT tokens
+  - `NODE_ENV` - Set to `production`
+  - `CLIENT_ORIGIN` - Frontend Vercel URL for CORS
+
+#### Frontend (Vercel)
+- **URL:** https://sweet-shop-management-system-assses-flame.vercel.app/
+- **Build Tool:** Vite
+- **Environment Variables:**
+  - `VITE_API_URL` - Backend API URL (https://sweet-shop-r149.onrender.com/api)
+
+### Deploy Your Own
+
+#### Backend Deployment (Render)
+
+1. Create account on [Render.com](https://render.com)
+2. Connect your GitHub repository
+3. Create a new Web Service
+4. Configure:
+   - **Root Directory:** `backend`
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
+5. Add environment variables (see Configuration section)
+6. Deploy!
+
+#### Frontend Deployment (Vercel)
+
+1. Create account on [Vercel.com](https://vercel.com)
+2. Import your GitHub repository
+3. Configure:
+   - **Root Directory:** `frontend`
+   - **Framework Preset:** Vite
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+4. Add environment variable:
+   - `VITE_API_URL` = Your backend URL + `/api`
+5. Deploy!
 
 ## 🤝 Contributing
 
@@ -488,18 +539,20 @@ Contributions are welcome! Please follow these steps:
 
 - GitHub: [@dakshchandra22](https://github.com/dakshchandra22)
 
-## AI Usage
+## 🤖 AI Usage
 
-# Tool Used: Cursor (AI-powered code editor)
+### Tool Used: Cursor (AI-powered code editor)
 
-- Debugging: Used AI assistance to understand error messages, stack traces, and failing Jest test cases.
+I used **Cursor** (powered by Claude Sonnet) as my coding assistant throughout this project.
 
-- Error Solving: Helped identify possible fixes during development, which were reviewed and implemented manually.
+### How I Used Cursor
 
-- Designing: Assisted with suggestions on project structure, separation of concerns, and naming conventions.
+- **Debugging:** Used Cursor to understand error messages, stack traces, and failing Jest test cases
+- **Error Solving:** Helped identify possible fixes during development, which were reviewed and implemented manually
+- **Designing:** Assisted with suggestions on project structure, separation of concerns, and naming conventions
+- **Testing Support:** Supported writing clearer test cases and understanding edge cases while following TDD (Red → Green → Refactor)
+- **Optimization:** Suggested minor refactoring and optimization to improve code readability and maintainability
 
-- Testing Support: Supported writing clearer test cases and understanding edge cases while following TDD (Red → Green → Refactor).
+### Responsibility
 
-- Optimization: Suggested minor refactoring and optimization to improve code readability and maintainability.
-
-- Responsibility: AI was used strictly as a support tool. All core logic, implementation decisions, testing flow, and commits were done by me.
+Cursor was used strictly as a support tool. All core logic, implementation decisions, testing flow, and commits were done by me. Every commit where Cursor was used includes: `Co-authored-by: Cursor <AI@users.noreply.github.com>`
