@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const { connectDB } = require('./config/database');
@@ -10,8 +11,16 @@ const errorHandler = require('./middleware/errorHandler');
 const app = express();
 
 // CORS configuration
+// Allow adding a custom client origin via CLIENT_ORIGIN env var (comma-separated or single)
+const defaultOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:5173'];
+let allowedOrigins = [...defaultOrigins];
+if (process.env.CLIENT_ORIGIN) {
+  const extra = process.env.CLIENT_ORIGIN.split(',').map(s => s.trim()).filter(Boolean);
+  allowedOrigins = Array.from(new Set([...allowedOrigins, ...extra]));
+}
+
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:5173'],
+  origin: allowedOrigins,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
@@ -23,6 +32,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve uploaded files (images)
+// Uploads are stored in backend/uploads and served at /uploads/<filename>
+// No static uploads serving — keeping server logic simple (no file uploads)
 
 // Routes
 app.use('/api/auth', authRoutes);

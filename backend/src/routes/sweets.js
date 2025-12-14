@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+// keep routes simple — no file upload handling here
 const { authenticate, isAdmin } = require('../middleware/auth');
 const {
   createSweet,
@@ -11,7 +12,8 @@ const {
   restockSweet
 } = require('../controllers/sweetController');
 
-// Create sweet (authenticated users)
+
+// Create sweet (authenticated users) - simple JSON payload (no image upload)
 router.post('/', authenticate, createSweet);
 
 // Get all sweets (authenticated users)

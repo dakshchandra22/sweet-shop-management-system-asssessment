@@ -2,7 +2,15 @@ const sweetService = require('../services/sweetService');
 
 async function createSweet(req, res, next) {
   try {
-    const sweet = await sweetService.createSweet(req.body);
+    // Simple create: accept JSON payload only
+    const payload = {
+      name: req.body.name,
+      category: req.body.category,
+      price: req.body.price,
+      quantity: req.body.quantity
+    };
+
+    const sweet = await sweetService.createSweet(payload);
     res.status(201).json(sweet);
   } catch (error) {
     next(error);
@@ -29,7 +37,15 @@ async function searchSweets(req, res, next) {
 
 async function updateSweet(req, res, next) {
   try {
-    const sweet = await sweetService.updateSweet(req.params.id, req.body);
+    // Accept JSON body for updates (no file upload)
+    const updatePayload = {
+      name: req.body.name,
+      category: req.body.category,
+      price: req.body.price,
+      quantity: req.body.quantity
+    };
+
+    const sweet = await sweetService.updateSweet(req.params.id, updatePayload);
     res.json(sweet);
   } catch (error) {
     next(error);

@@ -10,6 +10,7 @@ function SweetForm({ sweet, onSuccess, onCancel, isAdmin = false }) {
   });
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
+  // keep state minimal and focused on the fields we need
 
   useEffect(() => {
     if (sweet) {
@@ -39,6 +40,8 @@ function SweetForm({ sweet, onSuccess, onCancel, isAdmin = false }) {
     }
   };
 
+  // image upload removed to keep the add-new-sweet flow simple
+
   const validate = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
@@ -60,7 +63,8 @@ function SweetForm({ sweet, onSuccess, onCancel, isAdmin = false }) {
 
     setSubmitting(true);
     try {
-      const data = {
+      // Simple JSON payload for create/update
+      const payload = {
         name: formData.name,
         category: formData.category,
         price: Number(formData.price),
@@ -68,9 +72,9 @@ function SweetForm({ sweet, onSuccess, onCancel, isAdmin = false }) {
       };
 
       if (sweet) {
-        await api.put(`/sweets/${sweet._id}`, data);
+        await api.put(`/sweets/${sweet._id}`, payload);
       } else {
-        await api.post('/sweets', data);
+        await api.post('/sweets', payload);
       }
 
       onSuccess && onSuccess();
@@ -147,6 +151,8 @@ function SweetForm({ sweet, onSuccess, onCancel, isAdmin = false }) {
         />
         {errors.quantity && <div className="invalid-feedback">{errors.quantity}</div>}
       </div>
+
+      {/* Image upload removed to keep the form simple */}
 
       {errors.submit && (
         <div className="alert alert-danger" role="alert">

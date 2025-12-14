@@ -21,6 +21,7 @@ const sweetSchema = new mongoose.Schema({
     required: [true, 'Quantity is required'],
     min: [0, 'Quantity cannot be negative']
   }
+  
 }, {
   timestamps: true
 });

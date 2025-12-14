@@ -16,7 +16,9 @@ function SweetCard({ sweet, onPurchase, isAdmin = false, onEdit, onDelete }) {
   return (
     <div className="card h-100 sweet-card fade-in" data-testid={`sweet-card-${sweet._id}`}>
       <div className="sweet-image">
-        {getSweetEmoji(sweet.category)}
+        <div className="sweet-emoji" aria-hidden>
+          {getSweetEmoji(sweet.category)}
+        </div>
       </div>
       <div className="card-body">
         <h5 className="card-title fw-bold">{sweet.name}</h5>

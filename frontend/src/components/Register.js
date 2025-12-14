@@ -29,6 +29,8 @@ function Register() {
       const response = await api.post('/auth/register', formData);
       saveToken(response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
+      // Notify other components (Navbar) that auth state changed
+      window.dispatchEvent(new Event('authChange'));
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.error || 'Registration failed. Please try again.');
