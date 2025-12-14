@@ -2,9 +2,14 @@
 
 A full-stack web application for managing a sweet shop, built with the MERN stack (MongoDB, Express.js, React, Node.js). This project demonstrates modern web development practices including Test-Driven Development (TDD), RESTful API design, JWT authentication, and responsive UI design.
 
-![Sweet Shop](https://img.shields.io/badge/Sweet-Shop-pink?style=for-the-badge)
-![MERN](https://img.shields.io/badge/MERN-Stack-green?style=for-the-badge)
-![TDD](https://img.shields.io/badge/TDD-Approach-blue?style=for-the-badge)
+
+<img width="1440" height="400" alt="Screenshot 2025-12-14 at 10 46 35 PM" src="https://github.com/user-attachments/assets/085afe50-ed64-4c6e-a2eb-3ed890579d48" />
+<img width="1440" height="400" alt="Screenshot 2025-12-14 at 10 46 42 PM" src="https://github.com/user-attachments/assets/c3adcc31-e11f-43f5-983c-3236d01c415d" />
+<img width="1440" height="400" alt="Screenshot 2025-12-14 at 10 45 50 PM" src="https://github.com/user-attachments/assets/3d8acaf8-1263-47b3-bd7d-a26e01afd190" />
+<img width="1440" height="400" alt="Screenshot 2025-12-14 at 10 46 08 PM" src="https://github.com/user-attachments/assets/ba566df2-f43d-4512-b1d9-b315ae3ac25d" />
+<img width="1440" height="400" alt="Screenshot 2025-12-14 at 10 46 13 PM" src="https://github.com/user-attachments/assets/bfe39b51-7096-43b9-abba-eb881f2f1e0d" />
+<img width="1440" height="400" alt="Screenshot 2025-12-14 at 10 46 23 PM" src="https://github.com/user-attachments/assets/745c47c0-a605-4f87-adce-35d7b9af0288" />
+
 
 ## 🌐 Live Application
 
