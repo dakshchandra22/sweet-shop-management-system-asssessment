@@ -11,21 +11,44 @@ const errorHandler = require('./middleware/errorHandler');
 const app = express();
 
 // CORS configuration
-// Allow adding a custom client origin via CLIENT_ORIGIN env var (comma-separated or single)
+// Use environment variables for allowed origins - no hardcoded URLs
 const defaultOrigins = [
   'http://localhost:3000', 
   'http://localhost:3001', 
-  'http://localhost:5173',
-  'https://sweet-shop-management-system-assses-flame.vercel.app'
+  'http://localhost:5173'
 ];
+
 let allowedOrigins = [...defaultOrigins];
+
+// Add origins from CLIENT_ORIGIN environment variable (comma-separated)
 if (process.env.CLIENT_ORIGIN) {
-  const extra = process.env.CLIENT_ORIGIN.split(',').map(s => s.trim()).filter(Boolean);
-  allowedOrigins = Array.from(new Set([...allowedOrigins, ...extra]));
+  const envOrigins = process.env.CLIENT_ORIGIN.split(',').map(s => s.trim()).filter(Boolean);
+  allowedOrigins = Array.from(new Set([...allowedOrigins, ...envOrigins]));
 }
 
+// Support wildcard for Vercel preview deployments
+// If ALLOW_VERCEL_PREVIEWS is true, allow all *.vercel.app domains
+const allowVercelPreviews = process.env.ALLOW_VERCEL_PREVIEWS === 'true';
+
 const corsOptions = {
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin is in allowed list
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      return callback(null, true);
+    }
+    
+    // If Vercel previews are allowed, check if it's a vercel.app domain
+    if (allowVercelPreviews && origin.endsWith('.vercel.app')) {
+      return callback(null, true);
+    }
+    
+    // Origin not allowed
+    console.log('CORS blocked origin:', origin);
+    callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
